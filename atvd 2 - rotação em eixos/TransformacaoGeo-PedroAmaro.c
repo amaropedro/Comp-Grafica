@@ -129,40 +129,6 @@ void Movimento(int key, int x, int y){
 	glutPostRedisplay();
 }
 
-//de Marcelo Cohen e Isabel H. Manssour e livro "OpenGL - Uma Abordagem Prática e Objetiva"
-void AlteraTamanhoJanela(GLsizei w, GLsizei h)
-{
-	GLsizei largura, altura;
-                   
-	// Evita a divisao por zero
-	if(h == 0) h = 1;
-
-	// Atualiza as variáveis
-	largura = w;
-	altura = h;
-                                              
-	// Especifica as dimensões da Viewport
-	glViewport(0, 0, largura, altura);
-
-	// Inicializa o sistema de coordenadas
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	// Estabelece a janela de seleção
-	// (esquerda, direita, inferior, superior)
-	// mantendo a proporção com a janela de visualização
-	if (largura <= altura) 
-	{ 
-		gluOrtho2D (-25.0f, 25.0f, -25.0f*altura/largura, 25.0f*altura/largura);
-		win = 25.0f;
-	}              
-	else 
-	{ 
-		gluOrtho2D (-25.0f*largura/altura, 25.0f*largura/altura, -25.0f, 25.0f);
-		win = 25.0f*largura/altura;           
-	}             
-}
-
 int main(int argc, char** argv){
   glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);  
@@ -170,22 +136,10 @@ int main(int argc, char** argv){
 	glutInitWindowSize(500,500);  
 	glutCreateWindow("Boneco"); 
 	
-	// Registra a função callback de redesenho da janela de visualização
-	glutDisplayFunc(Desenha);  
-	
-	// Registra a função callback de redimensionamento da janela de visualização
-	//glutReshapeFunc(AlteraTamanhoJanela);    
-
-	// Registra a função callback para tratamento das teclas especiais
+	glutDisplayFunc(Desenha);     
 	glutSpecialFunc(Movimento);
-
-	// Registra a função callback para tratamento das teclas ASCII
 	glutKeyboardFunc (Teclado);
-
-	// Chama a função respons?vel por fazer as inicializações 
 	Inicializa(); 
- 
-	// Inicia o processamento e aguarda interações do usuário
 	glutMainLoop();
 
 	return 0;
